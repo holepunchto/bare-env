@@ -1,0 +1,30 @@
+{
+  "name": "bare-env",
+  "version": "1.0.0",
+  "description": "Environment variable support for JavaScript",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "binding.c",
+    "binding.js",
+    "CMakeLists.txt",
+    "prebuilds"
+  ],
+  "scripts": {
+    "test": "standard && bare test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holepunchto/bare-env.git"
+  },
+  "author": "Holepunch",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/holepunchto/bare-env/issues"
+  },
+  "homepage": "https://github.com/holepunchto/bare-env#readme",
+  "devDependencies": {
+    "brittle": "^3.2.1",
+    "standard": "^17.0.0"
+  }
+}
