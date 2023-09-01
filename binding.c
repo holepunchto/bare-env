@@ -9,8 +9,9 @@ static uv_rwlock_t bare_env_lock;
 static uv_once_t bare_env_lock_guard = UV_ONCE_INIT;
 
 static void
-on_bare_env_lock_init (void) {
-  uv_rwlock_init(&bare_env_lock);
+bare_env_on_lock_init (void) {
+  int err = uv_rwlock_init(&bare_env_lock);
+  assert(err == 0);
 }
 
 static js_value_t *
@@ -236,7 +237,7 @@ bare_env_unset (js_env_t *env, js_callback_info_t *info) {
 
 static js_value_t *
 init (js_env_t *env, js_value_t *exports) {
-  uv_once(&bare_env_lock_guard, on_bare_env_lock_init);
+  uv_once(&bare_env_lock_guard, bare_env_on_lock_init);
 
   {
     js_value_t *val;
