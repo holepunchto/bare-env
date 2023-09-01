@@ -6,14 +6,20 @@ module.exports = new Proxy(Object.create(null), {
   },
 
   get (target, property) {
+    if (typeof property !== 'string') return
+
     return binding.get(property)
   },
 
   has (target, property) {
+    if (typeof property !== 'string') return false
+
     return binding.has(property)
   },
 
   set (target, property, value) {
+    if (typeof property !== 'string') return
+
     const type = typeof value
 
     if (type !== 'string' && type !== 'number' && type !== 'boolean') {
@@ -28,6 +34,8 @@ module.exports = new Proxy(Object.create(null), {
   },
 
   deleteProperty (target, property) {
+    if (typeof property !== 'string') return
+
     binding.unset(property)
   },
 
