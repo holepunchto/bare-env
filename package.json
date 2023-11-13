@@ -1,6 +1,6 @@
 {
   "name": "bare-env",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Environment variable support for JavaScript",
   "main": "index.js",
   "files": [
