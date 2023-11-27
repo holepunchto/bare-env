@@ -1,20 +1,20 @@
-const binding = require('./binding')
+const os = require('bare-os')
 
 module.exports = new Proxy(Object.create(null), {
   ownKeys (target) {
-    return binding.getKeys()
+    return os.getEnvKeys()
   },
 
   get (target, property) {
     if (typeof property !== 'string') return
 
-    return binding.get(property)
+    return os.getEnv(property)
   },
 
   has (target, property) {
     if (typeof property !== 'string') return false
 
-    return binding.has(property)
+    return os.hasEnv(property)
   },
 
   set (target, property, value) {
@@ -28,7 +28,7 @@ module.exports = new Proxy(Object.create(null), {
 
     value = String(value)
 
-    binding.set(property, value)
+    os.setEnv(property, value)
 
     return true
   },
@@ -36,7 +36,7 @@ module.exports = new Proxy(Object.create(null), {
   deleteProperty (target, property) {
     if (typeof property !== 'string') return
 
-    binding.unset(property)
+    os.unsetEnv(property)
   },
 
   getOwnPropertyDescriptor (target, property) {
