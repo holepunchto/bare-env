@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/holepunchto/bare-env#readme",
   "dependencies": {
-    "bare-os": "^2.1.0"
+    "bare-os": "^3.0.1"
   },
   "devDependencies": {
     "brittle": "^3.2.1",
