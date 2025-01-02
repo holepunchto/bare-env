@@ -8,7 +8,7 @@ npm i bare-env
 
 ## Usage
 
-``` js
+```js
 const env = require('bare-env')
 
 console.log(env.PATH)
