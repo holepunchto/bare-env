@@ -23,9 +23,7 @@ module.exports = new Proxy(Object.create(null), {
     const type = typeof value
 
     if (type !== 'string' && type !== 'number' && type !== 'boolean') {
-      throw new Error(
-        'Environment variable must be of type string, number, or boolean'
-      )
+      throw new Error('Environment variable must be of type string, number, or boolean')
     }
 
     value = String(value)
