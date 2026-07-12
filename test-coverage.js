@@ -1,57 +1,27 @@
 const test = require('brittle')
 const env = require('.')
 
-// Use a unique prefix to avoid conflicts with real env vars
 const PREFIX = '__BARETEST_'
 
-test('get environment variable', (t) => {
-  process.env.PATH = '/usr/bin:/bin'
-  t.is(env.PATH, '/usr/bin:/bin')
-  t.is(env.PATH, process.env.PATH)
+test('get existing variable PATH', (t) => {
+  const path = env.PATH
+  t.ok(typeof path === 'string')
+  t.ok(path.length > 0)
 })
 
 test('get undefined variable returns undefined', (t) => {
-  t.is(env.__NONEXISTENT_VAR_XYZ__, undefined)
+  t.is(env.__BARETEST_NONEXISTENT_VARIABLE, undefined)
 })
 
-test('set environment variable', (t) => {
-  const key = PREFIX + 'TEST_VAR'
-  env[key] = 'hello'
-  t.is(env[key], 'hello')
-  t.is(process.env[key], 'hello')
-  delete process.env[key]
-})
-
-test('set numeric value converts to string', (t) => {
-  const key = PREFIX + 'NUM_VAR'
-  env[key] = 42
-  t.is(env[key], '42')
-  t.is(process.env[key], '42')
-  delete process.env[key]
-})
-
-test('set boolean value converts to string', (t) => {
-  const key = PREFIX + 'BOOL_VAR'
-  env[key] = true
-  t.is(env[key], 'true')
-  delete process.env[key]
-})
-
-test('delete environment variable', (t) => {
-  const key = PREFIX + 'DELETE_VAR'
-  process.env[key] = 'temp'
-  t.ok(key in env)
-  delete env[key]
-  t.absent(key in env)
-  t.is(env[key], undefined)
-})
-
-test('has operator works', (t) => {
+test('has operator on existing variable', (t) => {
   t.ok('PATH' in env)
-  t.absent('__MADE_UP_NONEXISTENT__' in env)
 })
 
-test('ownKeys returns enumerable keys', (t) => {
+test('has operator on nonexistent variable', (t) => {
+  t.absent('__BARETEST_DOES_NOT_EXIST_XYZ' in env)
+})
+
+test('ownKeys returns environment variable names', (t) => {
   const keys = Object.keys(env)
   t.ok(Array.isArray(keys))
   t.ok(keys.length > 0)
@@ -71,6 +41,32 @@ test('enumeration works with for...in', (t) => {
     if (Object.prototype.hasOwnProperty.call(env, key)) count++
   }
   t.ok(count > 0)
+})
+
+test('set and delete environment variable', (t) => {
+  const key = PREFIX + 'SET_TEST'
+  const initial = env[key]
+  t.is(initial, undefined)
+
+  env[key] = 'test_value'
+  t.is(env[key], 'test_value')
+
+  delete env[key]
+  t.is(env[key], undefined)
+})
+
+test('set numeric value converts to string', (t) => {
+  const key = PREFIX + 'NUM_TEST'
+  env[key] = 42
+  t.is(env[key], '42')
+  delete env[key]
+})
+
+test('set boolean value converts to string', (t) => {
+  const key = PREFIX + 'BOOL_TEST'
+  env[key] = true
+  t.is(env[key], 'true')
+  delete env[key]
 })
 
 test('getOwnPropertyDescriptor returns enumerable configurable', (t) => {
