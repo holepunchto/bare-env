@@ -7,10 +7,10 @@ test('basic', (t) => {
   t.comment(env)
 })
 
-test('get existing variable PATH', (t) => {
-  const path = env.PATH
-  t.ok(typeof path === 'string')
-  t.ok(path.length > 0)
+test('get existing PATH variable', (t) => {
+  const pathVal = env.PATH
+  t.ok(typeof pathVal === 'string')
+  t.ok(pathVal.length > 0)
 })
 
 test('get undefined variable returns undefined', (t) => {
@@ -29,7 +29,7 @@ test('ownKeys returns environment variable names', (t) => {
   const keys = Object.keys(env)
   t.ok(Array.isArray(keys))
   t.ok(keys.length > 0)
-  t.ok(keys.includes('PATH'))
+  t.ok(keys.some((k) => k.toUpperCase() === 'PATH'))
 })
 
 test('non-string property access returns undefined', (t) => {
