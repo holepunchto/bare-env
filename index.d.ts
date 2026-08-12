@@ -2,7 +2,11 @@ interface Env {
   [key: string]: string | undefined
 }
 
-/** The process environment as a map of variable names to values. Reads, writes, `delete`, and key enumeration are forwarded to the underlying `bare-os` environment; assigned values must be strings, numbers, or booleans (stored as strings) — assigning any other type throws. */
+/**
+ * The process environment as a map of variable names to values. Reads, writes, `delete`, and key
+ * enumeration are forwarded to the underlying `bare-os` environment; assigned values must be
+ * strings, numbers, or booleans (stored as strings) — assigning any other type throws.
+ */
 declare const env: Env
 
 export = env
